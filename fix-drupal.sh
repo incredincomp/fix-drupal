@@ -56,29 +56,29 @@ transfer_site(){
 
 fix_permissions(){
 # https://gist.github.com/chrisjlee/2719927
-path="/var/www/drupal/"
-user=$username
-group="www-data"
+  path="/var/www/drupal/"
+  user=$username
+  group="www-data"
 
-usermod -a -G "$group" "$user"
+  usermod -a -G "$group" "$user"
 
-cd $path;
+  cd $path;
 
-echo -e "Changing ownership of all contents of \"${path}\" :\n user => \"${user}\" \t group => \"${group}\"\n"
-chown -R ${user}:${group} .
-echo "Changing permissions of all directories inside \"${path}\" to \"750\"..."
-find . -type d -exec chmod u=rwx,g=rx,o= {} \;
-echo -e "Changing permissions of all files inside \"${path}\" to \"640\"...\n"
-find . -type f -exec chmod u=rw,g=r,o= {} \;
+  echo -e "Changing ownership of all contents of \"${path}\" :\n user => \"${user}\" \t group => \"${group}\"\n"
+  chown -R ${user}:${group} .
+  echo "Changing permissions of all directories inside \"${path}\" to \"750\"..."
+  find . -type d -exec chmod u=rwx,g=rx,o= {} \;
+  echo -e "Changing permissions of all files inside \"${path}\" to \"640\"...\n"
+  find . -type f -exec chmod u=rw,g=r,o= {} \;
 
-cd $path/sites;
+  cd $path/sites;
 
-echo "Changing permissions of \"files\" directories in \"${path}/sites\" to \"770\"..."
-find . -type d -name files -exec chmod ug=rwx,o= '{}' \;
-echo "Changing permissions of all files inside all \"files\" directories in \"${path}/sites\" to \"660\"..."
-find . -name files -type d -exec find '{}' -type f \; | while read FILE; do chmod ug=rw,o= "$FILE"; done
-echo "Changing permissions of all directories inside all \"files\" directories in \"${path}/sites\" to \"770\"..."
-find . -name files -type d -exec find '{}' -type d \; | while read DIR; do chmod ug=rwx,o= "$DIR"; done
+  echo "Changing permissions of \"files\" directories in \"${path}/sites\" to \"770\"..."
+  find . -type d -name files -exec chmod ug=rwx,o= '{}' \;
+  echo "Changing permissions of all files inside all \"files\" directories in \"${path}/sites\" to \"660\"..."
+  find . -name files -type d -exec find '{}' -type f \; | while read FILE; do chmod ug=rw,o= "$FILE"; done
+  echo "Changing permissions of all directories inside all \"files\" directories in \"${path}/sites\" to \"770\"..."
+  find . -name files -type d -exec find '{}' -type d \; | while read DIR; do chmod ug=rwx,o= "$DIR"; done
 }
 
 main(){
