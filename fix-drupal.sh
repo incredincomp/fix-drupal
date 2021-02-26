@@ -48,7 +48,10 @@ transfer_site(){
   cp -r /var/www/old_drupal/modules /var/www/drupal/web/modules
   cp -r /var/www/old_drupal/themes /var/www/drupal/web/themes
   cp /var/www/old_drupal/.htaccess /var/www/drupal/web/.htaccess
-
+  cp -r /var/www/old_drupal/libraries /var/www/drupal/web/libraries
+  if [ -f /var/www/old_drupal/composer.json ]; then
+    cp /var/www/old_drupal/composer.json /var/www/drupal/web/
+  fi
 }
 
 fix_permissions(){
@@ -82,6 +85,7 @@ main(){
   install_composer
   backup_path
   create_project
+  transfer_site
   fix_permissions
 }
 main
